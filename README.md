@@ -21,8 +21,12 @@ Users can Buy & Sell cars.
 
 # Design
 
-
+![Design Architecture](misc/BiddingSys_DesignDiagram_UML.png)
     
+# Info :
+Have not considered to have an UI. 
+Focussed only on Back-end Design and implementation
+Used REST and HTTP. ( ideally I should have used gRPC, but due to the lack of time to code, REST was chosen)
 
 
 
