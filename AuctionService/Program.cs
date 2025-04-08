@@ -42,13 +42,15 @@ builder.Services.AddMassTransitHostedService();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+if(true)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
 // Register Auction endpoints
 app.MapAuctionEndpoints();
-
 app.Run();

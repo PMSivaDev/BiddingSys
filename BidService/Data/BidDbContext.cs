@@ -9,11 +9,5 @@ public class BidDbContext : DbContext
 
     public DbSet<Bid> Bids { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Bid>().ToTable("Bids");
 
-        modelBuilder.Entity<Bid>().Property(b => b.Status)
-            .HasMaxLength(50);
-    }
 }
