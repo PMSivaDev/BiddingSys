@@ -12,17 +12,17 @@ export const options = {
     ],
 };
 
-// Base URL of your API
-const BASE_URL_AUCTIONSERVICE = 'https://localhost:7269'; // Replace with your actual API base URL
-const BASE_URL_BIDSERVICE = 'https://localhost:7063'; // Replace with your actual API base URL
+// Base URL of Micro Services API
+const BASE_URL_AUCTIONSERVICE = 'https://localhost:7269'; 
+const BASE_URL_BIDSERVICE = 'https://localhost:7063'; 
 
-//const BASE_URL_AUCTIONSERVICE = 'http://localhost:5213'; // Replace with your actual API base URL
-//const BASE_URL_BIDSERVICE = 'http://localhost:5144'; // Replace with your actual API base URL
+//const BASE_URL_AUCTIONSERVICE = 'http://localhost:5213'; 
+//const BASE_URL_BIDSERVICE = 'http://localhost:5144'; 
 
 
 // Pre-populated data for users and cars
-const users = new SharedArray('users', () => [1, 2, 3, 4]); // Replace with actual User IDs
-const cars = new SharedArray('cars', () => [1, 2]); // Replace with actual Car IDs
+const users = new SharedArray('users', () => [1, 2, 3, 4]); 
+const cars = new SharedArray('cars', () => [1, 2]); 
 
 // Helper function to create a new auction
 function createAuction() {

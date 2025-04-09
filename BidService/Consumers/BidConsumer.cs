@@ -6,7 +6,7 @@
 
 //namespace BidService.Consumers
 //{
-//    public class BidConsumer : IConsumer<AuctionBidPlacedEvent>  // Replace with your actual event class
+//    public class BidConsumer : IConsumer<AuctionBidPlacedEvent>  
 //    {
 //        private readonly BidDbContext _context;
 
