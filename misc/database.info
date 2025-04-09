@@ -1,0 +1,105 @@
+-- Containzerized SQL 2019 and SSMS Clinet in Windows 10
+
+-- Step 1: Create the Database
+CREATE DATABASE CarBiddingDB;
+GO
+
+-- Step 2: Use the newly created database
+USE CarBiddingDB;
+GO
+
+-- Step 3: Create Users Table
+CREATE TABLE Users (
+    UserId INT IDENTITY(1,1) PRIMARY KEY,
+    FirstName NVARCHAR(100),
+    LastName NVARCHAR(100),
+    Email NVARCHAR(255) UNIQUE NOT NULL,
+    PhoneNumber NVARCHAR(20),
+    Role NVARCHAR(50), -- Example: Seller, Bidder
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME DEFAULT GETDATE()
+);
+GO
+
+-- Step 4: Create Cars Table
+CREATE TABLE Cars (
+    CarId INT IDENTITY(1,1) PRIMARY KEY,
+    UserId INT, -- Foreign key to Users
+    Make NVARCHAR(100),
+    Model NVARCHAR(100),
+    Year INT,
+    VIN NVARCHAR(50) UNIQUE,
+    Condition NVARCHAR(50),
+    ListingPrice DECIMAL(18, 2),
+    Description NVARCHAR(1000),
+    Status NVARCHAR(50), -- Example: Active, Sold, Pending
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (UserId) REFERENCES Users(UserId)
+);
+GO
+
+-- Step 5: Create Auctions Table
+CREATE TABLE Auctions (
+    AuctionId INT IDENTITY(1,1) PRIMARY KEY,
+    CarId INT, -- Foreign key to Cars
+    StartDate DATETIME,
+    EndDate DATETIME,
+    AuctionType NVARCHAR(50), -- Example: Buy Now, Dynamic, Target
+    TargetPrice DECIMAL(18, 2) NULL, -- For Buy Now or Target auctions
+    BasePrice DECIMAL(18, 2) NULL, -- For Dynamic auctions
+    Status NVARCHAR(50), -- Example: Active, Closed
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (CarId) REFERENCES Cars(CarId)
+);
+GO
+
+-- Step 6: Create Bids Table
+CREATE TABLE Bids (
+    BidId INT IDENTITY(1,1) PRIMARY KEY,
+    AuctionId INT, -- Foreign key to Auctions
+    UserId INT, -- Foreign key to Users
+    BidAmount DECIMAL(18, 2),
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (AuctionId) REFERENCES Auctions(AuctionId),
+    FOREIGN KEY (UserId) REFERENCES Users(UserId)
+);
+GO
+
+-- Step 7: Create Notifications Table
+CREATE TABLE Notifications (
+    NotificationId INT IDENTITY(1,1) PRIMARY KEY,
+    UserId INT, -- Foreign key to Users
+    Message NVARCHAR(1000),
+    Type NVARCHAR(50), -- Example: Auction Status Change, Bid Update
+    IsRead BIT DEFAULT 0, -- Whether the notification was read by the user
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (UserId) REFERENCES Users(UserId)
+);
+GO
+
+-- Step 8: Create AuctionEvents Table
+CREATE TABLE AuctionEvents (
+    EventId INT IDENTITY(1,1) PRIMARY KEY,
+    AuctionId INT, -- Foreign key to Auctions
+    EventType NVARCHAR(50), -- Example: Auction Created, Bid Placed, Auction Closed
+    EventDetails NVARCHAR(1000), -- JSON or text-based details about the event
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (AuctionId) REFERENCES Auctions(AuctionId)
+);
+GO
+
+-- Step 9: (Optional) Create BidCache Table
+CREATE TABLE BidCache (
+    CacheId INT IDENTITY(1,1) PRIMARY KEY,
+    AuctionId INT, -- Foreign key to Auctions
+    BidId INT, -- Foreign key to Bids
+    BidAmount DECIMAL(18, 2),
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (AuctionId) REFERENCES Auctions(AuctionId),
+    FOREIGN KEY (BidId) REFERENCES Bids(BidId)
+);
+GO

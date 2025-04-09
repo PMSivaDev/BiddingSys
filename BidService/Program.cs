@@ -9,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // DB
 builder.Services.AddDbContext<BidDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") + ";Max Pool Size=10;"));
+
+builder.Services.AddMemoryCache();
+
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();

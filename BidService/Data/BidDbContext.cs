@@ -9,5 +9,8 @@ public class BidDbContext : DbContext
 
     public DbSet<Bid> Bids { get; set; }
 
+    public DbSet<Auction> Auctions { get; set; }
+
+
 
 }
